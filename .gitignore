@@ -1,0 +1,3 @@
+# Ignorar a pasta commands e todos os seus arquivos
+commands/
+commands/*
