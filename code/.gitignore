@@ -1,3 +1,5 @@
 # Ignorar a pasta commands e todos os seus arquivos
 commands/
 commands/*
+target/
+src/main/java/tp2/fpaa/csp/engine/*
