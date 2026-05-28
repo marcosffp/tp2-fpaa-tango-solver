@@ -2,4 +2,4 @@
 commands/
 commands/*
 target/
-src/main/java/tp2/fpaa/csp/engine/*
+out/
