@@ -18,18 +18,21 @@ public final class BalanceRule implements Rule {
 
     private boolean checkLine(Board board, int lineIndex, boolean isRow, int half) {
         int size = board.getSize();
-        int sunCount = 0;
-        int moonCount = 0;
+        int sunCount = 0, moonCount = 0, remaining = 0;
 
         for (int j = 0; j < size; j++) {
             int row = isRow ? lineIndex : j;
             int col = isRow ? j : lineIndex;
             Symbol symbol = board.getCell(row, col).getSymbol();
 
-            if (symbol == Symbol.SUN) sunCount++;
+            if      (symbol == Symbol.SUN)  sunCount++;
             else if (symbol == Symbol.MOON) moonCount++;
+            else                            remaining++;
         }
 
-        return sunCount <= half && moonCount <= half;
+        if (sunCount > half || moonCount > half) return false;
+        if (sunCount  + remaining < half)        return false;
+        if (moonCount + remaining < half)        return false;
+        return true;
     }
 }

@@ -16,7 +16,9 @@ public final class BacktrackingEngine<S extends State<S>> {
     private final ValueIterator<S> iterator;
 
     private long nodesVisited;
-    private int backtracks;
+    private long backtracks;
+    private long attempts;
+    private S    firstSolution;
 
     public BacktrackingEngine(
             ConstraintChecker<S> checker,
@@ -28,41 +30,40 @@ public final class BacktrackingEngine<S extends State<S>> {
     }
 
     public SolveResult<S> solve(S initialState) {
-        nodesVisited = 0;
-        backtracks = 0;
+        nodesVisited  = 0;
+        backtracks    = 0;
+        attempts      = 0;
+        firstSolution = null;
         S workingState = initialState.clone();
-        S solution = backtrack(workingState);
-        return new SolveResult<>(solution, nodesVisited, backtracks);
+        backtrack(workingState);
+        return new SolveResult<>(firstSolution, nodesVisited, backtracks, attempts);
     }
 
-    private S backtrack(S state) {
+    private void backtrack(S state) {
         nodesVisited++;
 
         if (state.isComplete()) {
-            return state;
+            if (firstSolution == null) firstSolution = state.clone();
+            return;
         }
 
         OptionalInt variableOpt = selector.selectVariable(state);
-        if (variableOpt.isEmpty()) {
-            return null;
-        }
+        if (variableOpt.isEmpty()) return;
 
         int variable = variableOpt.getAsInt();
 
         for (int value : iterator.getValues(state, variable)) {
             state.assign(variable, value);
+            attempts++;
 
             if (checker.isValid(state)) {
-                S result = backtrack(state);
-                if (result != null) {
-                    return result;
-                }
+                backtrack(state);
+                if (firstSolution != null) return;
+            } else {
+                backtracks++;
             }
 
-            backtracks++;
             state.unassign(variable);
         }
-
-        return null;
     }
 }
