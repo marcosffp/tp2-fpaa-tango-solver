@@ -1,4 +1,4 @@
-<img width="1600" style="height:auto; border-radius: 12px;" alt="banner" src="image/banner.png" />
+<img width="1600" style="height:auto; border-radius: 12px;" alt="banner" src="image/banner_tango.png" />
 
 # Tango Puzzle Solver
 
@@ -246,7 +246,6 @@ code/
     └── resources/                      ← board_4x4.txt, board_6x6_easy.txt, board_6x6_medium.txt,
                                             board_6x6_hard.txt, board_8x8.txt, board_16x16.txt
 ```
-
 
 ---
 
