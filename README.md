@@ -247,6 +247,7 @@ code/
                                             board_6x6_hard.txt, board_8x8.txt, board_16x16.txt
 ```
 
+
 ---
 
 ## Saída esperada
